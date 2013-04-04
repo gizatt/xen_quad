@@ -1,0 +1,20 @@
+<package>
+  <description brief="xen_quad">
+
+     xen_quad
+
+  </description>
+  <author>Gregory Izatt</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+
+  <depend package="roscpp"/>
+  <depend package="gazebo"/>
+  <depend package="gazebo_plugins"/>
+  <depend package="gazebo_tools"/>
+  <depend package="gazebo_msgs" />
+  <rosdep name="hector_models"/>
+
+</package>
+
+

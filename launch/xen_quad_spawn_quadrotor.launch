@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+
+ <launch>
+   <arg name="model" default="$(find xen_quad)/urdf/xen_quad.urdf"/>
+
+   <!-- send the robot XML to param server
+   <param name="robot_description" command="$(find xacro)/xacro.py '$(arg model)'"/>
+   -->
+
+   <!-- push robot_description to factory and spawn robot in gazebo -->
+   <node name="spawn_robot" pkg="gazebo" type="spawn_model"
+   args="-file '$(arg model)'
+   -urdf
+   -z 0.5
+   -model quadrotor"
+     respawn="false" output="screen"/>
+
+   <!-- Start quad listener process to take in motor commands and render
+	them to robot -->
+   <node name="xen_quad_flight" pkg="xen_quad" type="flight_controller"
+  args=""/>
+
+ </launch>
+   
