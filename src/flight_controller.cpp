@@ -68,7 +68,7 @@ int main(int argc, char **argv)
   double torques[4];
   int i;
 
-  ros::init(argc, argv, "flight_controller");
+  ros::init(argc, argv, "xq_flight_controller");
   ros::NodeHandle n;
   ros::Rate loop_rate(LOOP_RATE_HZ);
   ros::Subscriber sub = n.subscribe("xen_quad_motor_chatter", 1000, motorChatterCallback);

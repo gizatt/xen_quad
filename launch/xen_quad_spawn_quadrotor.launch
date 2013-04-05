@@ -21,5 +21,7 @@
    <node name="xen_quad_flight" pkg="xen_quad" type="flight_controller"
   args=""/>
 
+   <!-- Start quad remote process to receive input from gamepad -->
+   <node name="xen_quad_remote" pkg="xen_quad" type="remote" args=""/>
  </launch>
    
