@@ -10,3 +10,11 @@ the official ros/gazebo plugin api, or an updated
 and more functional version of that plugin should
 be found. It goes in 
 ROS STACK DIRECTORY/simulator_gazebo/gazebo/src/gazebo_ros_api_plugin.cpp
+The way I'm currently building the changes in is
+by navigating to root of the gazebo stack
+(with roscd gazebo) and then running make.
+Note that, for this to work, you'll have to
+change the owner/group of all gazebo stack
+files over to an appropriate user -- they were
+root by default for me, which kept them from
+wanting to build, even running make as root.
