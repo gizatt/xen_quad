@@ -1,0 +1,11 @@
+Contents of this folder:
+
+gazebo_ros_api_plugin.cpp:
+Modified gazebo api plugin. The plugin, at least
+in the state I found it, didn't look like it had
+a fully finished GazeboRosApiPlugin::applyBodyWrench.
+Update makes slight modification to make xen_quad
+work, but should eventually be merged into
+the official ros/gazebo plugin api, or an updated
+and more functional version of that plugin should
+be found.

@@ -138,4 +138,20 @@
        <axis xyz="0 0 1" />  
   </joint> 
 
+  <gazebo reference="base">
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="motor-n">
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="motor-s">
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="motor-e">
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="motor-w">
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
 </robot>

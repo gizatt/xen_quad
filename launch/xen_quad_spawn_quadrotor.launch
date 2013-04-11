@@ -12,7 +12,7 @@
    <node name="spawn_robot" pkg="gazebo" type="spawn_model"
    args="-file '$(arg model)'
    -urdf
-   -z 0.5
+   -z 0.45
    -model quadrotor"
      respawn="false" output="screen"/>
 
@@ -20,6 +20,12 @@
 	them to robot -->
    <node name="xen_quad_flight" pkg="xen_quad" type="flight_controller"
   args=""/>
+
+   <!-- Start joy node -->
+   <node respawn="true" pkg="joy" type="joy_node" name="xen_quad_joy" >
+      <param name="dev" type="string" value="/dev/input/js0" />
+      <param name="deadzone" value="0.12" />
+   </node>
 
    <!-- Start quad remote process to receive input from gamepad -->
    <node name="xen_quad_remote" pkg="xen_quad" type="remote" args=""/>

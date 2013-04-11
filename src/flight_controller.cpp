@@ -8,17 +8,7 @@
 #include "geometry_msgs/Point.h"
 #include "geometry_msgs/Wrench.h"
 
-/* Handful of defines, should port to include eventually */
-/* Controller update loop rate */
-#define LOOP_RATE_HZ 10
-/* Max rad/sec motors achieve at max thrust */
-#define MAX_MOTOR_W (1313.0f)
-/* Prop proportionality constant; assuming Thrust (N) = K * w^3, knowing that max
-    T is 0.69kg, and max w is above, then K = */
-#define PROP_K (0.69f / (MAX_MOTOR_W*MAX_MOTOR_W*MAX_MOTOR_W))
-/* Prop torque proportionality constant: really just a guess to make it reasonable
-  at max thrust. */
-#define PROP_TORQUE_K (0.1f / (MAX_MOTOR_W));
+#include "xq_comms.h"
 
 /* Global record of current commanded quad state */
 double quad_cmds[] = {0.0f, 0.0f, 0.0f, 0.0f};
@@ -33,7 +23,7 @@ bool apply_wrench_to_target(const char * target_name, ros::ServiceClient client_
   gazebo_msgs::ApplyBodyWrench abw_msg;
   ros::Duration dur(dura);
   abw_msg.request.body_name = target_name;
-  abw_msg.request.reference_frame = target_name;
+  abw_msg.request.reference_frame = "world";
   geometry_msgs::Point wrench_point;
   wrench_point.x = 0;
   wrench_point.y = 0;
@@ -47,7 +37,7 @@ bool apply_wrench_to_target(const char * target_name, ros::ServiceClient client_
   abw_msg.request.wrench = wrench_itself;
   abw_msg.request.duration = dur;
   client_apply.call(abw_msg);
-  //ROS_INFO("%d: %s on %s\n", abw_msg.response.success, abw_msg.response.status_message.data(), target_name);
+  ROS_INFO("%d: %s on %s\n", abw_msg.response.success, abw_msg.response.status_message.data(), target_name);
   return abw_msg.response.success;
 }
 
@@ -86,8 +76,8 @@ int main(int argc, char **argv)
       forces[i] = pow(quad_cmds[i]*MAX_MOTOR_W, 3.0f)*PROP_K;
       torques[i] = quad_cmds[i]*MAX_MOTOR_W*PROP_TORQUE_K;
     }
-    apply_wrench_to_target("quadrotor::motor-n", client_apply, 0, 0, forces[0], 0, 0, torques[0], 1/(double)LOOP_RATE_HZ);
-    apply_wrench_to_target("quadrotor::motor-s", client_apply, 0, 0, forces[1], 0, 0, torques[1], 1/(double)LOOP_RATE_HZ);
+    apply_wrench_to_target("quadrotor::motor-n", client_apply, 0, 0, forces[0], 0, 0, -torques[0], 1/(double)LOOP_RATE_HZ);
+    apply_wrench_to_target("quadrotor::motor-s", client_apply, 0, 0, forces[1], 0, 0, -torques[1], 1/(double)LOOP_RATE_HZ);
     apply_wrench_to_target("quadrotor::motor-e", client_apply, 0, 0, forces[2], 0, 0, torques[2], 1/(double)LOOP_RATE_HZ);
     apply_wrench_to_target("quadrotor::motor-w", client_apply, 0, 0, forces[3], 0, 0, torques[3], 1/(double)LOOP_RATE_HZ);
 

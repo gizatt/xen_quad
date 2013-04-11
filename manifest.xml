@@ -13,6 +13,7 @@
   <depend package="gazebo_plugins"/>
   <depend package="gazebo_tools"/>
   <depend package="gazebo_msgs" />
+  <rosdep name="joy" />
   <rosdep name="hector_models"/>
 
 </package>
