@@ -59,11 +59,17 @@ int main(int argc, char **argv)
     floats[2] = fabs(q_z_tran);
     floats[3] = fabs(q_z_tran);
 
-    /* Rotation */
-    floats[0] += q_x_spin;
-    floats[1] -= q_x_spin;
-    floats[2] += q_y_spin;
-    floats[3] -= q_y_spin;
+    /* Rotation around arms */
+    floats[0] += q_y_spin;
+    floats[1] -= q_y_spin;
+    floats[2] += q_x_spin;
+    floats[3] -= q_x_spin;
+
+    /* Yaw */
+    floats[0] += q_z_spin;
+    floats[1] += q_z_spin;
+    floats[2] -= q_z_spin;
+    floats[3] -= q_z_spin;
 
     for (i=0; i<3; i++){
       if (floats[i]<0) floats[i] = 0;
