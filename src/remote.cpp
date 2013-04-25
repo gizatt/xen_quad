@@ -53,16 +53,17 @@ struct timespec now_timespec = {1, 1};;
 void imuChatterCallback(const sensor_msgs::Imu::ConstPtr& imumsg){
   /* Parse out data into accs and vels and throw them, low-pass filtered, into
     imu accs */
+  /* x and y axes flipped b/c I can't presently convince imu to rotate in urdf */
   if (fabs(imu_accs[0]) < 100)
-    imu_accs[0] += ACC_LP_WEIGHT*(imumsg->linear_acceleration.x - imu_accs[0]);
+    imu_accs[0] += ACC_LP_WEIGHT*(imumsg->linear_acceleration.y - imu_accs[0]);
   if (fabs(imu_accs[1]) < 100)
-    imu_accs[1] += ACC_LP_WEIGHT*(imumsg->linear_acceleration.y - imu_accs[1]);
+    imu_accs[1] += ACC_LP_WEIGHT*(-imumsg->linear_acceleration.x - imu_accs[1]);
   if (fabs(imu_accs[2]) < 100)
     imu_accs[2] += ACC_LP_WEIGHT*(imumsg->linear_acceleration.z - imu_accs[2]);
   if (fabs(imu_vels[0]) < 100)
-    imu_vels[0] += GYRO_LP_WEIGHT*(imumsg->angular_velocity.x - imu_vels[0]);
+    imu_vels[0] += GYRO_LP_WEIGHT*(imumsg->angular_velocity.y - imu_vels[0]);
   if (fabs(imu_vels[1]) < 100)
-   imu_vels[1] += GYRO_LP_WEIGHT*(imumsg->angular_velocity.y - imu_vels[1]);
+   imu_vels[1] += GYRO_LP_WEIGHT*(-imumsg->angular_velocity.x - imu_vels[1]);
   if (fabs(imu_vels[2]) < 100)
    imu_vels[2] += GYRO_LP_WEIGHT*(imumsg->angular_velocity.z - imu_vels[2]);
 
@@ -168,17 +169,17 @@ int main(int argc, char **argv)
     floats[3] = fabs(q_z_tran);
 
     /* Rotation around arms */ 
-    floats[0] += q_y_spin - lastKnownAY/200.;
-    floats[1] += -q_y_spin + lastKnownAY/200.;
-    floats[2] += q_x_spin - lastKnownAX/200.;
-    floats[3] += -q_x_spin + lastKnownAX/200.;
+    floats[0] += q_y_spin + lastKnownAY/70.;
+    floats[1] += -q_y_spin - lastKnownAY/70.;
+    floats[2] += q_x_spin + lastKnownAX/70.;
+    floats[3] += -q_x_spin - lastKnownAX/70.;
     /* Yaw */
     floats[0] += q_z_spin;
     floats[1] += q_z_spin;
     floats[2] -= q_z_spin;
     floats[3] -= q_z_spin;
 
-    for (i=0; i<3; i++){
+    for (i=0; i<4; i++){
       if (floats[i]<0) floats[i] = 0;
       else if (floats[i] > 1) floats[i] = 1;
     }
