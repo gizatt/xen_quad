@@ -181,12 +181,12 @@
 </joint>
 
 <gazebo>
-  <controller:gazebo_ros_imu name="imu_controller" plugin="libgazebo_ros_imu.so">
+  <controller:hector_gazebo_ros_imu plugin="libhector_gazebo_ros_imu.so">
     <alwaysOn>true</alwaysOn>
-    <updateRate>50.0</updateRate> 
+    <updateRate>30.0</updateRate> 
     <bodyName>imu_link</bodyName>
     <topicName>xen_quad_imu_chatter</topicName>
-    <gaussianNoise>2.89e-08</gaussianNoise>
+    <gaussianNoise>0.01</gaussianNoise>
     <xyzOffsets>0 0 0</xyzOffsets>
     <rpyOffsets>0 0 0</rpyOffsets>
     <interface:position name="imu_position"/>

@@ -2,7 +2,8 @@
 #define XEN_QUAD_COMMS_H
 
 /* Controller update loop rate */
-#define LOOP_RATE_HZ 10
+#define LOOP_RATE_HZ 20
+
 /* Max rad/sec motors achieve at max thrust */
 #define MAX_MOTOR_W (1313.0f)
 /* Prop proportionality constant; assuming Thrust (N) = K * w^3, knowing that max

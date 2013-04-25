@@ -15,6 +15,7 @@
   <depend package="gazebo_msgs" />
   <rosdep name="joy" />
   <rosdep name="hector_models"/>
+  <rosdep name="hector_gazebo"/>
 
 </package>
 
