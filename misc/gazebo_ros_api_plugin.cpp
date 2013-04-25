@@ -1433,6 +1433,7 @@ namespace gazebo
         //        into the reference frame of the body
         //        first, translate by reference point to the body frame
         gazebo::math::Pose target_to_reference = frame->GetWorldPose() - body->GetWorldPose();
+        /*
         ROS_ERROR("reference frame for applied wrench: [%f %f %f, %f %f %f]-[%f %f %f, %f %f %f]=[%f %f %f, %f %f %f]",
                    body->GetWorldPose().pos.x,
                    body->GetWorldPose().pos.y,
@@ -1452,8 +1453,9 @@ namespace gazebo
                    target_to_reference.rot.GetAsEuler().x,
                    target_to_reference.rot.GetAsEuler().y,
                    target_to_reference.rot.GetAsEuler().z
-                 );
+                 );*/
         this->transformWrench(target_force, target_torque, reference_force, reference_torque, target_to_reference);
+        /*
         ROS_ERROR("wrench defined as [%s]:[%f %f %f, %f %f %f] --> applied as [%s]:[%f %f %f, %f %f %f]",
                    frame->GetName().c_str(),
                    reference_force.x,
@@ -1469,24 +1471,24 @@ namespace gazebo
                    target_torque.x,
                    target_torque.y,
                    target_torque.z
-                 );
+                 );*/
 
       }
       else if (req.reference_frame == "" || req.reference_frame == "world" || req.reference_frame == "map" || req.reference_frame == "/map")
       {
-        ROS_INFO("ApplyBodyWrench: reference_frame is empty/world/map, using inertial frame, transferring from body relative to inertial frame");
-        // FIXME: transfer to inertial frame
+        /*ROS_INFO("ApplyBodyWrench: reference_frame is empty/world/map, using inertial frame, transferring from body relative to inertial frame");
+        // FIXME: transfer to inertial frame */
         gazebo::math::Pose target_to_reference = body->GetWorldPose();
-        ROS_ERROR("reference frame for applied wrench: [%f %f %f, %f %f %f]",
+        /* ROS_ERROR("reference frame for applied wrench: [%f %f %f, %f %f %f]",
                    body->GetWorldPose().pos.x,
                    body->GetWorldPose().pos.y,
                    body->GetWorldPose().pos.z,
                    body->GetWorldPose().rot.GetAsEuler().x,
                    body->GetWorldPose().rot.GetAsEuler().y,
                    body->GetWorldPose().rot.GetAsEuler().z
-                 );
+                 ); */
         this->transformWrench(target_force, target_torque, reference_force, reference_torque, target_to_reference);
-        ROS_ERROR("wrench defined as [inertial]:[%f %f %f, %f %f %f] --> applied as [%s]:[%f %f %f, %f %f %f]",
+        /* ROS_ERROR("wrench defined as [inertial]:[%f %f %f, %f %f %f] --> applied as [%s]:[%f %f %f, %f %f %f]",
                    reference_force.x,
                    reference_force.y,
                    reference_force.z,
@@ -1500,7 +1502,7 @@ namespace gazebo
                    target_torque.x,
                    target_torque.y,
                    target_torque.z
-                 );
+                 );    */
       }
       else
       {
